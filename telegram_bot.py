@@ -1,6 +1,20 @@
 import os
+from threading import Thread
+from http.server import HTTPServer, BaseHTTPRequestHandler
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
+class HealthCheck(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.end_headers()
+        self.wfile.write(b"Bot is Live")
+
+def run_web_server():
+    port = int(os.environ.get("PORT", 10000))
+    server = HTTPServer(('0.0.0.0', port), HealthCheck)
+    server.serve_forever()
+
+Thread(target=run_web_server, daemon=True).start()
 
 BOT_TOKEN = os.getenv("TELEGRAM_TOKEN")
 CHANNEL_ID = "@Aitipsfootballbot1"
