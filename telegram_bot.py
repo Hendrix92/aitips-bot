@@ -44,7 +44,7 @@ def get_today_radar():
         return msg
     except Exception as e:
         print(f"Errore API: {e}")
-       today_str = datetime.now(ITALY_TZ).strftime("%d %b %Y").upper()
+        today_str = datetime.now(ITALY_TZ).strftime("%d %b %Y").upper()
         return f"""AITIPS RADAR - {today_str}
 3 Value Bet +8% - OGGI 2 NOV
 
