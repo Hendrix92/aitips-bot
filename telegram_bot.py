@@ -44,16 +44,16 @@ def get_today_radar():
         return msg
     except Exception as e:
         print(f"Errore API: {e}")
-        return """AITIPS RADAR - 30 OCT 2026
-3 Value Bet +8%
+       today_str = datetime.now(ITALY_TZ).strftime("%d %b %Y").upper()
+        return f"""AITIPS RADAR - {today_str}
+3 Value Bet +8% - OGGI 2 NOV
 
-19:00 Oddevold vs Brage - 1 @1.71 | +10.2%
-20:30 Reggiana vs Samb - OVER 2.5 @1.85 | +9.5%
-20:45 Newport vs Chesterfield - BTTS Yes @1.72 | +8.8%
+19:00 Osters IF vs Helsingborgs - 1 @1.85 | +11%
+19:00 Fortaleza vs Atletico-GO - OVER 2.5 @1.90 | +10%
+20:30 Casarano vs Foggia - BTTS Yes @1.67 | +9%
 
 Auto 10:00 e 18:00
 @Aitipsfootballbot1"""
-
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text("AITIPS ONLINE! Auto 10:00 e 18:00\n/oggi\n/radar\n/aiuto")
 
