@@ -1,0 +1,35 @@
+name: Auto Radar 10 e 18
+
+on:
+  schedule:
+    # 10:00 Roma = 09:00 UTC, 18:00 Roma = 17:00 UTC
+    - cron: '0 9 * * *'
+    - cron: '0 17 * * *'
+  workflow_dispatch:
+
+jobs:
+  post-radar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Post radar su Telegram
+        run: |
+          DATE=$(TZ='Europe/Rome' date +'%d %b %Y' | tr '[:lower:]' '[:upper:]')
+          MSG="🎯 AITIPS RADAR - $DATE
+          
+          3 Value Bet +8% - OGGI
+
+          Il radar AI sta analizzando le partite di oggi con xG + formazioni LIVE
+
+          Scrivi /radar su @Aitipsfootballbot per le giocate!
+
+          Auto 10:00 e 18:00
+          @Aitipsfootballbot1"
+          
+          # Sostituisci con le 3 partite del giorno se vuoi personalizzare
+          curl -s -X POST https://api.telegram.org/bot${{ secrets.TELEGRAM_TOKEN }}/sendMessage \
+            -d chat_id=${{ secrets.CHANNEL_ID }} \
+            -d text="$MSG" \
+            -d parse_mode=Markdown
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          CHANNEL_ID: ${{ secrets.CHANNEL_ID }}
